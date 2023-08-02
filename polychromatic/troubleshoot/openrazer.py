@@ -32,13 +32,14 @@ except Exception:
 
 OPENRAZER_MODULES = ["razerkbd", "razermouse", "razeraccessory", "razerkraken"]
 
+
 def __get_razer_usb_pids():
     razer_usb_pids = []
     vendor_files = glob.glob("/sys/bus/usb/devices/*/idVendor")
     for vendor in vendor_files:
         with open(vendor, "r") as f:
             vid = str(f.read()).strip().upper()
-            if vid == "1532":
+            if vid == "1532" or vid == "30FA": # Adding your VID here
                 with open(os.path.dirname(vendor) + "/idProduct") as f:
                     pid = str(f.read()).strip().upper()
                     razer_usb_pids.append(pid)
